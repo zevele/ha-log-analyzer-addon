@@ -1,0 +1,38 @@
+configuration:
+  litellm_address:
+    name: "LiteLLM Server Address"
+    description: "The full network URL of your LiteLLM instance (e.g., http://192.168.1.50:4000)."
+  model_name:
+    name: "AI Model Name"
+    description: "The exact model identifier configured in your LiteLLM server (e.g., gpt-4o, claude-3-opus)."
+  litellm_api_key:
+    name: "LiteLLM API Key"
+    description: "The API authentication key required by your LiteLLM server. Leave blank if not required."
+  advanced_settings:
+    name: "Advanced Automation Settings"
+    description: "Tweak deep execution flags and container start policies."
+    fields:
+      scheduled_time:
+        name: "Daily Execution Time"
+        description: "The exact time your daily log analysis should kick off. Must be in 24-hour format (HH:MM)."
+      run_on_start:
+        name: "Run Analysis on Startup"
+        description: "If enabled, the add-on will instantly perform a log sweep every single time the container restarts."
+      dry_run:
+        name: "Dry Run Mode"
+        description: "If enabled, the add-on will fetch and parse logs but will skip sending payloads to LiteLLM (useful for testing parameters)."
+      token_count:
+        name: "Max Analysis Tokens"
+        description: "The maximum number of tokens allowed in the LLM response context window."
+      max_lines:
+        name: "Max Log Lines to Parse"
+        description: "Caps the log payload size by defining the maximum number of recent lines to read from the log history."
+      max_hours:
+        name: "Log History Horizon (Hours)"
+        description: "Limits how far back in time to fetch logs. Only logs generated within this hourly window will be analyzed."
+      single_run:
+        name: "Single Run Execution"
+        description: "If enabled, the add-on will run the analysis exactly once when started, then gracefully stop instead of running continuously on a schedule."
+      sensor_name:
+        name: "Sensor Friendly Name"
+        description: "The name that will display on your dashboard entities list. Changing this dynamically builds a matching unique entity ID."
