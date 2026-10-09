@@ -8,11 +8,17 @@ export MAX_HOURS=$(bashio::config 'advanced_settings.max_hours')
 export LITELLM_ADDRESS=$(bashio::config 'litellm_address')
 export MODEL_NAME=$(bashio::config 'model_name')
 
+CUSTOM_NAME=$(bashio::config 'sensor_name')
+SENSOR_SLUG=$(echo "$CUSTOM_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '_')
+
 python3 /usr/local/bin/ha_log_analyzer.py | python3 -c "
 import sys, urllib.request, json, datetime
 
 # 1. Grab the token directly from the passed Bash argument array
 token = sys.argv[1]
+friendly_title = sys.argv[2]
+entity_id_slug = sys.argv[3]
+
 if not token or token == 'None':
    raise RuntimeError('SUPERVISOR_TOKEN argument is missing')
 
@@ -22,7 +28,7 @@ iso_now = datetime.datetime.now().isoformat()
 payload = {
     'state': iso_now,
     'attributes': {
-        'friendly_name': 'HomeAssistant Log Analyzer Output',
+        'friendly_name': friendly_title,
         'icon': 'mdi:text-search',
         'update_date': iso_now,
         'homeassistant': log_text
@@ -30,7 +36,7 @@ payload = {
 }
 
 req = urllib.request.Request(
-    'http://supervisor/core/api/states/sensor.homeassistant_log_analyzer',
+    f'http://supervisor/core/api/states/sensor.{entity_id_slug}',
     data=json.dumps(payload).encode('utf-8'),
     headers={
         'Content-Type': 'application/json',
@@ -40,7 +46,7 @@ req = urllib.request.Request(
 )
 
 urllib.request.urlopen(req, timeout=10)
-" "${SUPERVISOR_TOKEN}"
+" "${SUPERVISOR_TOKEN}" "${CUSTOM_NAME}" "${SENSOR_SLUG}"
 
 bashio::log.info "Sensor update command completed successfully."
 

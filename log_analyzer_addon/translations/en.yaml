@@ -33,3 +33,6 @@ configuration:
       single_run:
         name: "Single Run Execution"
         description: "If enabled, the add-on will run the analysis exactly once when started, then gracefully stop instead of running continuously on a schedule."
+      sensor_name:
+        name: "Sensor Friendly Name"
+        description: "The name that will display on your dashboard entities list. Changing this dynamically builds a matching unique entity ID."
