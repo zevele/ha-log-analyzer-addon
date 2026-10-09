@@ -8,7 +8,7 @@ export MAX_HOURS=$(bashio::config 'advanced_settings.max_hours')
 export LITELLM_ADDRESS=$(bashio::config 'litellm_address')
 export MODEL_NAME=$(bashio::config 'model_name')
 
-CUSTOM_NAME=$(bashio::config 'sensor_name')
+CUSTOM_NAME=$(bashio::config 'advanced_settings.sensor_name')
 SENSOR_SLUG=$(echo "$CUSTOM_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '_')
 
 python3 /usr/local/bin/ha_log_analyzer.py | python3 -c "
