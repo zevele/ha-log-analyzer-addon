@@ -641,31 +641,16 @@ def main():
 
     print("=" * 70)
     print("HOME ASSISTANT CORE LOG ANALYSIS")
-    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
-    print(current_time)
     print("=" * 70)
     print()
 
     # --------------------------------------------------------------
     # Collect Core logs
     # --------------------------------------------------------------
-
-    print(f"Running: ha core logs -n {LOG_LINES}")
-    print()
-
-#    output = run_command([
-#        "ha",
-#        "core",
-#        "logs",
-#        "-n",
-#        str(LOG_LINES),
-#    ])
+    
     output = "\n".join(get_logs().splitlines()[-LOG_LINES:])
 
     raw_lines = output.splitlines()
-
-    print(f"Raw Core lines received: {len(raw_lines):,}")
-    print()
 
     # --------------------------------------------------------------
     # Keep only logs after the last Core restart
@@ -674,38 +659,16 @@ def main():
     raw_lines = filter_after_last_restart(raw_lines)
 
     # --------------------------------------------------------------
-    # Show first few raw lines
-    # --------------------------------------------------------------
-
-    print("First 5 raw Core lines:")
-    print("-" * 70)
-
-    for line in raw_lines[:5]:
-        print(repr(line))
-
-    print("-" * 70)
-    print()
-
-
-    # --------------------------------------------------------------
     # Parse
     # --------------------------------------------------------------
 
     entries = parse_core_logs(raw_lines)
-
-    print(f"Parsed Core entries: {len(entries):,}")
 
     # --------------------------------------------------------------
     # Filter last 24 hours
     # --------------------------------------------------------------
 
     entries = filter_last_24_hours(entries)
-
-    print(
-        f"Core entries in last {HOURS_TO_ANALYZE} hours: "
-        f"{len(entries):,}"
-    )
-    print()
 
     # --------------------------------------------------------------
     # Severity counts
@@ -729,11 +692,6 @@ def main():
     # --------------------------------------------------------------
 
     consolidated = consolidate_entries(entries)
-
-    print(
-        f"Distinct log messages: {len(consolidated):,}"
-    )
-    print()
 
     # --------------------------------------------------------------
     # Build compact stream
@@ -863,8 +821,6 @@ Focus on actionable findings and avoid unnecessary explanation.
     print()
     print("=" * 70)
     print("LITELLM ANALYSIS")
-    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
-    print(current_time)
     print("=" * 70)
     print()
 
@@ -876,6 +832,10 @@ Focus on actionable findings and avoid unnecessary explanation.
            width=100,
        )
     )
+    
+    print("-" * 70)
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+    print(f"Analysis time: {current_time}")
 
 if __name__ == "__main__":
     main()
