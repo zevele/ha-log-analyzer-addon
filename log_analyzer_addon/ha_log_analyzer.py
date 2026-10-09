@@ -728,18 +728,23 @@ def main():
 
     print(compact_text)
 
-    print()
-    print("=" * 70)
+    
 
     # --------------------------------------------------------------
     # DRY RUN
     # --------------------------------------------------------------
 
     if DRY_RUN:
+        print()
+        print("=" * 70)
 
         print("DRY_RUN=True")
         print("LiteLLM request was NOT sent.")
 
+        print("-" * 70)
+        current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+        print(f"Analysis time: {current_time}")
+        
         return
 
     # --------------------------------------------------------------
