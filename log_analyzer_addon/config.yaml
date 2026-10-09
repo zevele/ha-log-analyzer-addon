@@ -17,7 +17,7 @@ schema:
   litellm_api_key: password
   model_name: str
   advanced_settings:
-    sensor_name: Homeassistant Log Analyzer
+    sensor_name: str
     dry_run: bool
     run_on_start: bool
     single_run: bool
@@ -31,7 +31,7 @@ options:
   litellm_address: "http://localhost:4000"
   model_name: "gpt-4o"
   advanced_settings:
-    sensor_name: str
+    sensor_name: Homeassistant Log Analyzer
     dry_run: false
     run_on_start: true
     single_run: true
