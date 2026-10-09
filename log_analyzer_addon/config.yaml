@@ -1,6 +1,6 @@
 name: "Log Analyzer Add-on"
 description: "A daily log analyzing addon"
-version: "1.0.0"
+version: "1.0.1"
 slug: "log_analyzer_addon"
 init: false
 startup: services
